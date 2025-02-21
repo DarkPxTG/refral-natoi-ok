@@ -2,7 +2,6 @@
 
 import { useTab } from '@/contexts/TabContext'
 import HomeTab from './HomeTab'
-import LeaderboardTab from './LeaderboardTab'
 import FriendsTab from './FriendsTab'
 import TasksTab from './TasksTab'
 import Payment from './PaymentTab'  // کامپوننت Payment را وارد کردم
@@ -21,9 +20,7 @@ const TabContainer = () => {
             <div className={`${activeTab === 'home' ? 'is-show' : 'is-hide'}`}>
                 <HomeTab />
             </div>
-            <div className={`${activeTab === 'Payment' ? 'is-show' : 'is-hide'}`}>
-                <LeaderboardTab />
-            </div>
+            
             {/* ارسال مقادیر به کامپوننت FriendsTab */}
             <div className={`${activeTab === 'friends' ? 'is-show' : 'is-hide'}`}>
                 <FriendsTab 

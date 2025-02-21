@@ -1,106 +1,46 @@
-// components/LeaderboardTab.tsx
-
-/**
- * This project was developed by Nikandr Surkov.
- * 
- * YouTube: https://www.youtube.com/@NikandrSurkov
- * GitHub: https://github.com/nikandr-surkov
- */
-
 'use client'
+import React from 'react'
 
-import PawsLogo from '@/icons/PawsLogo'
-import { trophy } from '@/images';
-import Image from 'next/image'
+const NFTPage = () => {
+  const tonkeeperWallet = "UQBEhJ5tKuV-eYHkrhD4NQcAYnUzsOp2OLAfxp57en0L5Tdz" // آدرس والت Tonkeeper خودت رو اینجا بذار
+  const amountInTon = 0.2 // مقدار مالیات به TON
+  const amountInNano = amountInTon * 2000000000 // تبدیل TON به نانو (nanotons)
+  const paymentMessage =  "Daily Tax Payment" // پیام تراکنش
 
-type LeaderboardItem = {
-    wallet: string;
-    balance: string;
-    place: string | number;
-    medal?: '🥇' | '🥈' | '🥉';
+  // لینک پرداخت Tonkeeper با مقدار نانو
+  const tonkeeperPaymentUrl = `https://app.tonkeeper.com/transfer/${tonkeeperWallet}?amount=${amountInNano}&text=${encodeURIComponent(paymentMessage)}`
+
+  return (
+    <div className="nft-page text-center pt-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 p-10 rounded-lg shadow-2xl relative overflow-hidden">
+      {/* ضرب قرمز کلفت روی کادر */}
+      <div className="absolute top-0 left-0 right-0 bottom-0 border-8 border-gray-600"></div>
+
+      {/* محو کردن محتویات */}
+      <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-lg"></div>
+      https://s6.uupload.ir/files/r_(3)_3lo.png
+      {/* تصویر وسط کادر  https://s6.uupload.ir/files/r_(3)_3lo.png عکس اضافی */}
+      <img 
+        src="https://s6.uupload.ir/files/r_(1)_4yph.png" // آدرس تصویر خودت رو اینجا بذار
+        alt="وسط کادر"
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      />
+
+      <h1 className="text-4xl font-semibold text-white mb-6">NFT Payment Page</h1>
+      <p className="text-xl text-white mb-4">Please make a payment of {amountInTon} TON.</p>
+      <p className="text-lg text-gray-300 mb-6">{paymentMessage}</p>
+      
+      {/* دکمه‌ها غیر فعال هستند */}
+      <a 
+        href="#" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="bg-gradient-to-r from-teal-500 to-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-teal-600 transition-all duration-300 cursor-not-allowed"
+        aria-disabled="true"
+      >
+        Pay with Tonkeeper
+      </a>
+    </div>
+  )
 }
 
-const LeaderboardTab = () => {
-    const leaderboardData: LeaderboardItem[] = [
-        { wallet: "Arvin_Dev", balance: "1M", place: "🥇" },
-        { wallet: "imGet", balance: "374K", place: "🥈" },
-        { wallet: "Esalat", balance: "59K", place: "🥉" },
-        { wallet: "mehranseydi", balance: "40K", place: "#4" },
-        { wallet: "abbas", balance: "26K", place: "#5" },
-        { wallet: "CenterProd", balance: "22K", place: "#6" },
-        { wallet: "tuxeoqt", balance: "18K", place: "#7" },
-        { wallet: "ladesov", balance: "7K", place: "#8" },
-    ]
-
-    return (
-        <div className={`leaderboard-tab-con transition-all duration-300`}>
-            {/* Header */}
-            <div className="px-4">
-                <div className="flex flex-col items-center mt-4">
-                    <Image
-                        src={trophy}
-                        alt="Trophy"
-                        width={80}
-                        height={80}
-                        className="mb-2"
-                    />
-                    <h1 className="text-2xl font-bold mb-2">Leaderboard</h1>
-                    <div className="w-full mt-2 px-6 py-1 flex justify-between rounded-lg text-sm font-medium text-[#fefefe] bg-[#151516]">
-                        <span>Total</span>
-                        <span>23,253 users</span>
-                    </div>
-                </div>
-
-                {/* Current User Stats */}
-                <div className="bg-white rounded-2xl p-6 mt-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 p-1.5 bg-black rounded-lg">
-                                <PawsLogo className="w-full h-full" />
-                            </div>
-                            <div className="text-black font-medium">
-                                <div className="text-base">Arvin_Dev</div>
-                                <div className="text-xs">1M NATOI</div>
-                            </div>
-                        </div>
-                        <div className="text-black"># 1</div>
-                    </div>
-                </div>
-
-                {/* Leaderboard List */}
-                <div className="mt-4 space-y-0 rounded-t-2xl">
-                    {leaderboardData.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`p-4 flex items-center justify-between border-b-[1px] border-[#222622] ${index === 0 ? 'bg-[#2d2b1b] rounded-t-2xl' :
-                                index === 1 ? 'bg-[#272728]' :
-                                    index === 2 ? 'bg-[#2d241b]' :
-                                        'bg-[#151515]'
-                                }`}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 p-1.5 bg-white rounded-lg">
-                                    <PawsLogo className="w-full h-full text-black" />
-                                </div>
-                                <div>
-                                    <div className="text-base font-medium">{item.wallet}</div>
-                                    <div className="text-sm font-medium text-[#7c7c7c]">
-                                        {item.balance} NATOI
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={`text-base font-medium ${typeof item.place === 'string' && item.place.startsWith('#')
-                                ? 'text-white'
-                                : ''
-                                }`}>
-                                {item.place}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    )
-}
-
-export default LeaderboardTab
+export default NFTPage

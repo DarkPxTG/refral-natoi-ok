@@ -12,7 +12,7 @@ const HomeTab = () => {
     const [morseInput, setMorseInput] = useState('')
     const [isMorseVisible, setMorseVisible] = useState(false)
     const [usedMorseCodes, setUsedMorseCodes] = useState<string[]>([])
-    const [account, setAccount] = useState<string | null>(null) // Account state for wallet
+    const [account, setAccount] = useState<string | null>(null)
 
     useEffect(() => {
         const savedCoins = localStorage.getItem('coins')
@@ -25,7 +25,6 @@ const HomeTab = () => {
             setUsedMorseCodes(JSON.parse(savedUsedMorseCodes))
         }
 
-        // Retrieve wallet address from localStorage if available
         const savedAccount = localStorage.getItem('account')
         if (savedAccount) {
             setAccount(savedAccount)
@@ -66,27 +65,10 @@ const HomeTab = () => {
         return value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value
     }
 
-    const handleConnectWallet = async () => {
-        // بررسی اینکه آیا Tonkeeper نصب است
-        if (typeof window !== 'undefined' && window.tonkeeper) {
-            try {
-                // درخواست دسترسی به حساب کاربر از Tonkeeper
-                const { accounts } = await window.tonkeeper.request({
-                    method: 'ton_requestAccounts',
-                })
-
-                // آدرس حساب کاربر را ذخیره کنید
-                setAccount(accounts[0])
-                localStorage.setItem('account', accounts[0]) // ذخیره آدرس کیف پول در localStorage
-
-                alert('Wallet connected: ' + accounts[0])
-            } catch (error) {
-                alert('Error connecting wallet: ' + error)
-            }
-        } else {
-            alert('Please install Tonkeeper!')
-        }
-    }
+    const handleConnectWallet = () => {
+        // Removed the unnecessary code and wallet connection check
+        alert('Coming Soon');
+    };
 
     const handleMorseToggle = () => {
         setMorseVisible(!isMorseVisible)
@@ -97,47 +79,24 @@ const HomeTab = () => {
             <button onClick={handleConnectWallet} className="w-full flex justify-center mt-8 relative z-10">
                 <div className="bg-[#007aff] text-white px-3 py-1 rounded-full flex items-center gap-2">
                     <Wallet className="w-5 h-5" />
-                    <span>{account ? `Wallet Connected: ${account}` : 'Connect Wallet'}</span>
+                    <span>{account ? `Wallet Connected: ${account}` : 'Coming Soon'}</span>
                 </div>
             </button>
 
-            {account && <div>Connected Account: {account}</div>}
-
             <div className="flex flex-col items-center mt-8 relative z-10">
-                <Image
-                    src="/images/not.png"
-                    alt="Custom Logo"
-                    width={112}
-                    height={112}
-                    className="mb-4"
-                />
+                <Image src="/images/not.png" alt="Custom Logo" width={112} height={112} className="mb-4" />
                 <div className="flex items-center gap-1 text-center">
                     <div className="text-6xl font-bold mb-1">{formatCoins(coins)}</div>
                     <div className="text-white text-2xl">NATOI</div>
                 </div>
-                <div
-                    className="flex items-center gap-1 text-[#a19f9f] rounded-full px-4 py-1.5 mt-2 cursor-pointer"
-                    onClick={handleMorseToggle}
-                >
+                <div className="flex items-center gap-1 text-[#a19f9f] rounded-full px-4 py-1.5 mt-2 cursor-pointer" onClick={handleMorseToggle}>
                     <span>SECRET CODE</span>
                     <ArrowRight className="w-6 h-6" />
                 </div>
-
                 {isMorseVisible && (
                     <div className="mt-4 bg-[#1e1e1e] p-4 rounded-lg z-20">
-                        <input
-                            type="text"
-                            value={morseInput}
-                            onChange={(e) => setMorseInput(e.target.value)}
-                            placeholder="Enter Secret Code"
-                            className="w-full p-2 rounded bg-[#2d2d2e] text-white mb-2"
-                        />
-                        <button
-                            onClick={handleMorseSubmit}
-                            className="w-full bg-[#007aff] text-white py-1 rounded"
-                        >
-                            Submit
-                        </button>
+                        <input type="text" value={morseInput} onChange={(e) => setMorseInput(e.target.value)} placeholder="Enter Secret Code" className="w-full p-2 rounded bg-[#2d2d2e] text-white mb-2" />
+                        <button onClick={handleMorseSubmit} className="w-full bg-[#007aff] text-white py-1 rounded">Submit</button>
                     </div>
                 )}
             </div>
@@ -150,7 +109,6 @@ const HomeTab = () => {
                     </div>
                     <ArrowRight className="w-6 h-6 text-gray-400" />
                 </button>
-
                 <button className="w-full bg-[#ffffff0d] border-[1px] border-[#2d2d2e] rounded-lg px-4 py-4 flex items-center justify-between max-w-[900px] mx-auto">
                     <div className="flex items-center gap-3 font-medium">
                         <Star className="w-8 h-8" />
@@ -162,5 +120,4 @@ const HomeTab = () => {
         </div>
     )
 }
-
-export default HomeTab
+export default HomeTab;

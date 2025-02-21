@@ -1,34 +1,60 @@
 'use client'
-
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const NFTPage = () => {
-    const tonkeeperWallet = "UQBEhJ5tKuV-eYHkrhD4NQcAYnUzsOp2OLAfxp57en0L5Tdz" // آدرس والت Tonkeeper خودت رو اینجا بذار
-    const amountInTon = 0.1 // مقدار مالیات به TON
-    const amountInNano = amountInTon * 1000000000 // تبدیل TON به نانو (nanotons)
-    const paymentMessage = "NFT Tax Payment" // پیام تراکنش
+  const tonkeeperWallet = "UQBEhJ5tKuV-eYHkrhD4NQcAYnUzsOp2OLAfxp57en0L5Tdz"
+  const amountInTon = 0.2
+  const amountInNano = amountInTon * 2000000000
+  const paymentMessage = "Daily Tax Payment"
 
-    // لینک پرداخت Tonkeeper با مقدار نانو
-    const tonkeeperPaymentUrl = `https://app.tonkeeper.com/transfer/${tonkeeperWallet}?amount=${amountInNano}&text=${encodeURIComponent(paymentMessage)}`
+  const tonkeeperPaymentUrl = `https://app.tonkeeper.com/transfer/${tonkeeperWallet}?amount=${amountInNano}&text=${encodeURIComponent(paymentMessage)}`
 
-    return (
-        <div className="nft-page text-center pt-6">
-            <h2 className="text-xl font-bold">Payment Tax</h2>
-            <div className="mt-6 p-4 bg-gray-700 text-white rounded-lg">
-    You can receive 15K coins daily
-</div>
+  useEffect(() => {
+    // تنظیم عکس پس‌زمینه برای کل صفحه با رنگ ترکیبی
+    document.body.style.backgroundImage = 'url("https://s6.uupload.ir/files/r_(6)_fx5f.jpg")'; 
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundRepeat = 'no-repeat';
+    document.body.style.backgroundColor = '#1a202c'; // رنگ پس‌زمینه اصلی که پشت تصویر می‌آید
+    document.body.style.height = '100vh'; // اطمینان از پوشش تمام صفحه
 
-    
-            <a
-                href={tonkeeperPaymentUrl} 
-                className="bg-blue-500 text-white px-6 py-2 rounded-full mt-6 inline-block"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Pay Now
-            </a>
-        </div>
-    )
+    // اطمینان از اینکه پس‌زمینه درست نمایش داده شود
+    document.body.style.backgroundBlendMode = 'overlay'; // ترکیب رنگ و تصویر
+
+    return () => {
+      // حذف پس‌زمینه هنگام خروج از صفحه
+      document.body.style.backgroundImage = '';
+      document.body.style.backgroundColor = '';
+      document.body.style.backgroundBlendMode = '';
+    };
+  }, []);
+
+  return (
+    <div className="flex items-center justify-center h-screen text-center p-10 relative z-10">
+      <div 
+        className="p-6 rounded-lg shadow-2xl z-20" 
+        style={{
+          backgroundImage: 'url("https://s6.uupload.ir/files/r_(6)_fx5f.jpg")', // تصویر پس‌زمینه
+          backgroundSize: 'cover', // پوشاندن تمام فضا با تصویر
+          backgroundPosition: 'center', // تنظیم موقعیت تصویر
+          backgroundRepeat: 'no-repeat', // جلوگیری از تکرار تصویر
+          backgroundBlendMode: 'overlay', // ترکیب رنگ و تصویر
+        }}
+      >
+        <h1 className="text-4xl font-semibold text-white mb-6">Daily Payment Task</h1>
+        <p className="text-xl text-white mb-4">Please make a payment of {amountInTon} TON.</p>
+        <p className="text-lg text-gray-300 mb-6">{paymentMessage}</p>
+        <a 
+          href={tonkeeperPaymentUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-gradient-to-r from-teal-500 to-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-teal-600 transition-all duration-300"
+        >
+          Pay with Tonkeeper
+        </a>
+      </div>
+    </div>
+  )
 }
 
 export default NFTPage
