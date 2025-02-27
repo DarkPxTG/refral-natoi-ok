@@ -2,13 +2,48 @@
 import React from 'react'
 
 const NFTPage = () => {
-  const tonkeeperWallet = "UQBEhJ5tKuV-eYHkrhD4NQcAYnUzsOp2OLAfxp57en0L5Tdz" // آدرس والت Tonkeeper خودت رو اینجا بذار
-  const amountInTon = 0.2 // مقدار مالیات به TON
+  const tonkeeperWallet = "UQBEhJ5tKuV-eYHkrhD4NQcAYnUzsOp2OLAfxp57en0L5Tdz" // آدرس ولت
+  const nftId = "your-nft-id" // آیدی NFT که باید ارسال شود
+  const amountInTon = 0.3 // افزایش مقدار مالیات به 0.3
   const amountInNano = amountInTon * 2000000000 // تبدیل TON به نانو (nanotons)
-  const paymentMessage =  "Daily Tax Payment" // پیام تراکنش
+  const paymentMessage = "Daily Tax Payment"
 
   // لینک پرداخت Tonkeeper با مقدار نانو
   const tonkeeperPaymentUrl = `https://app.tonkeeper.com/transfer/${tonkeeperWallet}?amount=${amountInNano}&text=${encodeURIComponent(paymentMessage)}`
+
+  // تابع ارسال NFT به کاربر
+  const sendNFT = async (recipientWallet: string) => {
+    try {
+      const response = await fetch("https://your-nft-api.com/send", { // این URL باید به API شما که ارسال NFT رو انجام می‌ده متصل باشه
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nftId: nftId,
+          senderWallet: tonkeeperWallet,
+          recipientWallet: recipientWallet,
+        }),
+      })
+      
+      if (!response.ok) {
+        throw new Error('Error sending NFT');
+      }
+      
+      console.log("NFT sent successfully!");
+    } catch (error) {
+      console.error("Failed to send NFT:", error);
+    }
+  }
+
+  const handlePaymentAndSendNFT = () => {
+    // انجام پرداخت با Tonkeeper
+    window.open(tonkeeperPaymentUrl, "_blank");
+    
+    // فرض می‌کنیم آدرس ولت کاربر رو در اختیار داریم
+    const recipientWallet = "user-wallet-address"; // این مقدار باید از کاربر گرفته بشه یا شبیه‌سازی بشه
+    sendNFT(recipientWallet);
+  }
 
   return (
     <div className="nft-page text-center pt-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 p-10 rounded-lg shadow-2xl relative overflow-hidden">
@@ -29,15 +64,13 @@ const NFTPage = () => {
       <p className="text-xl text-white mb-4">Please make a payment of {amountInTon} TON.</p>
       <p className="text-lg text-gray-300 mb-6">{paymentMessage}</p>
       
-      {/* دکمه‌ها غیر فعال هستند */}
+      {/* دکمه‌ها فعال هستند */}
       <a 
-        href="#" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="bg-gradient-to-r from-teal-500 to-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-teal-600 transition-all duration-300 cursor-not-allowed"
-        aria-disabled="true"
+        href="#"
+        onClick={handlePaymentAndSendNFT} // اجرای همزمان پرداخت و ارسال NFT
+        className="bg-gradient-to-r from-teal-500 to-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-md hover:bg-teal-600 transition-all duration-300"
       >
-        Pay with Tonkeeper
+        Pay with Tonkeeper and Receive NFT
       </a>
     </div>
   )
