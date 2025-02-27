@@ -84,7 +84,7 @@ const HomeTab = () => {
             </button>
 
             <div className="flex flex-col items-center mt-8 relative z-10">
-                <Image src="/images/not.png" alt="Custom Logo" width={112} height={112} className="mb-4" />
+                <Image src="/images/NATOI.png" alt="Custom Logo" width={135} height={135} className="mb-4" />
                 <div className="flex items-center gap-1 text-center">
                     <div className="text-6xl font-bold mb-1">{formatCoins(coins)}</div>
                     <div className="text-white text-2xl">NATOI</div>
