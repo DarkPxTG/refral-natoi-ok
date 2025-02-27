@@ -9,41 +9,23 @@ const NFTPage = () => {
 
   const tonkeeperPaymentUrl = `https://app.tonkeeper.com/transfer/${tonkeeperWallet}?amount=${amountInNano}&text=${encodeURIComponent(paymentMessage)}`
 
-  useEffect(() => {
-    // تنظیم عکس پس‌زمینه برای کل صفحه با رنگ ترکیبی
-    document.body.style.backgroundImage = 'url("https://s6.uupload.ir/files/r_(6)_fx5f.jpg")'; 
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    document.body.style.backgroundRepeat = 'no-repeat';
-    document.body.style.backgroundColor = '#1a202c'; // رنگ پس‌زمینه اصلی که پشت تصویر می‌آید
-    document.body.style.height = '100vh'; // اطمینان از پوشش تمام صفحه
-
-    // اطمینان از اینکه پس‌زمینه درست نمایش داده شود
-    document.body.style.backgroundBlendMode = 'overlay'; // ترکیب رنگ و تصویر
-
-    return () => {
-      // حذف پس‌زمینه هنگام خروج از صفحه
-      document.body.style.backgroundImage = '';
-      document.body.style.backgroundColor = '';
-      document.body.style.backgroundBlendMode = '';
-    };
-  }, []);
-
   return (
     <div className="flex items-center justify-center h-screen text-center p-10 relative z-10">
       <div 
-        className="p-6 rounded-lg shadow-2xl z-20" 
+        className="p-6 rounded-lg shadow-2xl z-20 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white relative overflow-hidden"
         style={{
-          backgroundImage: 'url("https://s6.uupload.ir/files/r_(6)_fx5f.jpg")', // تصویر پس‌زمینه
+          backgroundImage: 'url("https://s6.uupload.ir/files/r_(6)_ldy2.jpg")', // تصویر پس‌زمینه
           backgroundSize: 'cover', // پوشاندن تمام فضا با تصویر
           backgroundPosition: 'center', // تنظیم موقعیت تصویر
           backgroundRepeat: 'no-repeat', // جلوگیری از تکرار تصویر
           backgroundBlendMode: 'overlay', // ترکیب رنگ و تصویر
         }}
       >
-        <h1 className="text-4xl font-semibold text-white mb-6">Daily Payment Task</h1>
-        <p className="text-xl text-white mb-4">Please make a payment of {amountInTon} TON.</p>
+        <h1 className="text-4xl font-semibold mb-6">Daily Payment Task</h1>
+        <p className="text-xl mb-4">Please make a payment of {amountInTon} TON.</p>
         <p className="text-lg text-gray-300 mb-6">{paymentMessage}</p>
+
+        {/* دکمه فعال */}
         <a 
           href={tonkeeperPaymentUrl} 
           target="_blank" 
